@@ -16,3 +16,6 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ["name", "email", "content"]
 
+
+class SearchForm(forms.Form):
+    query = forms.CharField()
