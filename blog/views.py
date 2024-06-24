@@ -1,5 +1,5 @@
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.contrib.postgres.search import SearchVector
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank, TrigramSimilarity
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.core.mail import send_mail
@@ -91,6 +91,8 @@ def post_search(request: HttpRequest) -> HttpResponse:
         form = SearchForm(request.GET)
         if form.is_valid():
             query = form.cleaned_data["query"]
-            results = Post.published.annotate(search=SearchVector("title", "content")).filter(search=query)
+            search_vector = SearchVector("title", weight="A") + SearchVector("content", weight="B")
+            search_query = SearchQuery(query, config="russian")
+            results = Post.published.annotate(similarity=TrigramSimilarity("title", query)).filter(similarity__gte=0.1).order_by("-similarity")
 
     return render(request, "blog/post/search.html", {"form": form, "query": query, "results": results})
