@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 class PublishedManager(models.Manager):
@@ -10,7 +11,7 @@ class PublishedManager(models.Manager):
 
 class Post(models.Model):
     class Meta:
-        ordering = ("-publish_date", )
+        ordering = ("-publish_date",)
         indexes = (
             models.Index(fields=["-publish_date"]),
         )
@@ -20,7 +21,7 @@ class Post(models.Model):
         PUBLISHED = "PB", "Published"
 
     title = models.CharField(max_length=250)
-    slug = models.SlugField(max_length=250)
+    slug = models.SlugField(max_length=250, unique_for_date="publish_date")
     content = models.TextField()
     publish_date = models.DateTimeField(default=timezone.now())
     created_date = models.DateTimeField(auto_now_add=True)
@@ -34,3 +35,6 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse("blog:post_detail",
+                       args=[self.publish_date.year, self.publish_date.month, self.publish_date.day, self.slug])
