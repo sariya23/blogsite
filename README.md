@@ -9,6 +9,7 @@
 Для начала нужно сколнить репозиторий по SSH или HTTP:
 - `git clone https://github.com/sariya23/blogsite.git` - HTTP;
 - `git clone git@github.com:sariya23/blogsite.git` - SSH.
+- 
 Далее нужно создать файл `.env` в корне проекта и там прописать переменные окружения, как в примере `.env.examples`.
 - `SECRET_KEY` - секретный ключ от приложения Django. Можно сгенерировать любую строку;
 - `DB_NAME` - название базы данных в Postgresql. Можно придумать любую;
