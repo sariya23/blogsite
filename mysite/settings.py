@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.sitemaps",
     "django.contrib.postgres",
+    "home.apps.HomeConfig",
 ]
 SITE_ID = 1
 MIDDLEWARE = [
@@ -72,7 +73,8 @@ DATABASES = {
         "NAME": envs.db_name,
         "USER": envs.db_username,
         "PASSWORD": envs.db_password,
-        "HOST": "pgdb",
+        "HOST": envs.db_host,
+        "PORT": 5432,
     }
 }
 
