@@ -72,6 +72,7 @@ DATABASES = {
         "NAME": envs.db_name,
         "USER": envs.db_username,
         "PASSWORD": envs.db_password,
+        "HOST": "pgdb",
     }
 }
 
