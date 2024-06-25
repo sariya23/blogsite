@@ -91,8 +91,8 @@ def post_search(request: HttpRequest) -> HttpResponse:
         form = SearchForm(request.GET)
         if form.is_valid():
             query = form.cleaned_data["query"]
-            search_vector = SearchVector("title", weight="A") + SearchVector("content", weight="B")
-            search_query = SearchQuery(query, config="russian")
-            results = Post.published.annotate(similarity=TrigramSimilarity("title", query)).filter(similarity__gte=0.1).order_by("-similarity")
+            results = Post.published.annotate(
+                similarity=TrigramSimilarity("title", query) + TrigramSimilarity("content", query)).filter(
+                similarity__gte=0.1).order_by("-similarity")
 
     return render(request, "blog/post/search.html", {"form": form, "query": query, "results": results})

@@ -14,7 +14,7 @@ SECRET_KEY = envs.secret_key
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = envs.allowed_hosts
 
 # Application definition
 
@@ -69,9 +69,9 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "blog",
-        "USER": "blog",
-        "PASSWORD": "1234",
+        "NAME": envs.db_name,
+        "USER": envs.db_username,
+        "PASSWORD": envs.db_password,
     }
 }
 
