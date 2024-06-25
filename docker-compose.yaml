@@ -5,9 +5,9 @@ services:
   pgdb:
     image: postgres
     environment:
-      - POSTGRES_DB=$DB_NAME
-      - POSTGRES_USER=$DB_USERNAME
-      - POSTGRES_PASSWORD=$DB_PASSWORD
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
     container_name: pgdb
     volumes:
       - pgdbdata:/var/lib/postgresql/data
@@ -15,7 +15,7 @@ services:
   django:
     build: .
     container_name: django
-    command: python manage.py runserver 0.0.0.0:8000
+    command: python manage.py migrate && python manage.py runserver 0.0.0.0:8000
     volumes:
       - /code
     ports:
