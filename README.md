@@ -21,8 +21,16 @@
 
 ```bash
 docker-compose up --build -d
-docker-compose run django python manage.py makemigrations
 docker-compose run django python manage.py migrate
+```
+Дальше нужно создать суперпользователя для доступа в админку:
+```bash
+docker-compose run django python manage.py createsuperuser
+```
+*Cледуйте инструкциям на экране*
+
+Теперь запускаем сервер с проектом:
+```bash
 docker-compose run --service-ports django python manage.py runserver 0.0.0.0:8000
 ```
 Теперь приложение работает по IP 127.0.0.1 и порту 8000
